@@ -1,0 +1,15 @@
+/* benefits.component.css */
+.benefits {
+  padding: 40px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+.card {
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
