@@ -1,17 +1,15 @@
 import { Component } from '@angular/core';
-import { HeroComponent } from '../home/components/hero/hero.component';
-import { FooterComponent } from '../home/components/footer/footer.component';
-import { BenefitsComponent } from '../home/components/benefits/benefits.component';
-import { EligibilityComponent } from '../home/components/eligibility/eligibility.component';
-import { FeaturesComponent } from '../home/components/features/features.component';
-import { NavbarComponent } from '../home/components/navbar/navbar.component';
+import { HeaderComponent } from '../header/header.component';
+import { FooterComponent } from '../footer/footer.component';
+import { ContentComponent } from '../content/content.component';
+import { RouterModule, RouterOutlet } from "@angular/router";
 
 @Component({
   selector: 'app-welcome',
   standalone: true,
-  imports : [HeroComponent, FooterComponent, BenefitsComponent, EligibilityComponent, FeaturesComponent, NavbarComponent],
+  imports: [HeaderComponent, FooterComponent, RouterOutlet, RouterModule],
   templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.css']
+  styleUrl: './welcome.component.scss'
 })
 export class WelcomeComponent {
 
