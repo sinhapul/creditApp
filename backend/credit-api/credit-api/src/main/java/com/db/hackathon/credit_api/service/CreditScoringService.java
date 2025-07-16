@@ -1,84 +1,65 @@
-// package com.db.hackathon.credit_api.service;
+// src/main/java/com/db/hackathon/creditapi/service/CreditScoringService.java
+package com.db.hackathon.credit_api.service;
 
-// import java.math.BigDecimal;
-// import java.util.List;
+import com.db.hackathon.credit_api.client.OpenAIClient;
+import com.db.hackathon.credit_api.dto.LoanAssessRequest;
+import com.db.hackathon.credit_api.dto.LoanAssessResponse;
+import com.db.hackathon.credit_api.entity.Transaction;
+import com.db.hackathon.credit_api.entity.User;
+import com.db.hackathon.credit_api.repository.TransactionRepository;
+import com.db.hackathon.credit_api.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-// import org.springframework.stereotype.Service;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
-// import com.db.hackathon.credit_api.client.OpenAIClient;
-// import com.db.hackathon.credit_api.dto.LoanAssessRequest;
-// import com.db.hackathon.credit_api.dto.LoanAssessResponse;
-// import com.db.hackathon.credit_api.entity.Transaction;
-// import com.db.hackathon.credit_api.repository.TransactionRepository;
+@Service
+@RequiredArgsConstructor
+public class CreditScoringService {
+    private final UserRepository userRepo;
+    private final TransactionRepository txnRepo;
+    private final OpenAIClient openAIClient;
 
-// import lombok.RequiredArgsConstructor;
+    public LoanAssessResponse assessLoan(LoanAssessRequest req) {
+        // 1) load user
+        User user = userRepo.findById(req.userId())
+            .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-// @Service
-// @RequiredArgsConstructor
-// public class CreditScoringService {
-    
-//     private final TransactionRepository transactionRepository;
-//     private final OpenAIClient openAIClient;
+        // 2) fetch last‑N transactions (assumes repo method exists)
+        List<Transaction> txns = txnRepo
+            .findByUserIdOrderByPaymentDateDesc(user.getId())
+            .stream()
+            .limit(10)
+            .collect(Collectors.toList());
 
-//     public LoanAssessResponse assessLoan(LoanAssessRequest req) {
+        // 3) ask the LLM for a credit score
+        int score = openAIClient.getCreditScore(user, txns);
 
-//         int score = calculateScore(req.userId());
+        // 4) compute eligible amount
+        BigDecimal eligible = req.requestAmount()
+            .min(BigDecimal.valueOf(score).multiply(BigDecimal.valueOf(100)));
 
-//         // Determine eligible amount
-//         BigDecimal eligible = req.requestAmount()
-//             .min(BigDecimal.valueOf(score).multiply(BigDecimal.valueOf(100)));
+        // 5) pick interest rate & frequency
+        BigDecimal rate = determineRate(score);
+        String freq   = determineFrequency(score);
 
-//         // Pick interest rate tier
-//         BigDecimal rate;
-//         if (score >= 750)       rate = BigDecimal.valueOf(10.5);
-//         else if (score >= 700)  rate = BigDecimal.valueOf(12.5);
-//         else if (score >= 650)  rate = BigDecimal.valueOf(15.0);
-//         else if (score >= 600)  rate = BigDecimal.valueOf(18.0);
-//         else                    rate = BigDecimal.ZERO;  // not eligible
+        return new LoanAssessResponse(score, eligible, rate, freq);
+    }
 
-//         // Offer frequency options
-//         String freq;
-//         if (score < 600)            freq = "Not Eligible";
-//         else if (score < 650)       freq = "weekly (restricted)";
-//         else if (score < 700)       freq = "weekly";
-//         else                        freq = "daily,weekly";
+    private static BigDecimal determineRate(int score) {
+        if (score >= 750)      return BigDecimal.valueOf(10.5);
+        if (score >= 700)      return BigDecimal.valueOf(12.5);
+        if (score >= 650)      return BigDecimal.valueOf(15.0);
+        if (score >= 600)      return BigDecimal.valueOf(18.0);
+        return BigDecimal.ZERO;
+    }
 
-//         return new LoanAssessResponse(score, eligible, rate, freq);
-//     }
-
-//     private int calculateScore(Long userId) {
-        
-//         List<Transaction> txns = transactionRepository.findByUserId(userId);
-//         int base = 600;
-
-//         for (Transaction txn : txns) {
-
-//             String label = openAIClient.classify();
-
-//             switch (label) {
-//                 case "high_risk":
-//                     base -= 50;
-//                     break;
-            
-//                 default:
-//                     break;
-//             }
-//             base += transaction.getAmount().compareTo(BigDecimal.ZERO) > 0 ? 10 : -5;
-//         }
-
-    
-
-//         // Example scoring logic based on transaction history
-//         int score = 0;
-//         for (Transaction transaction : transactions) {
-//             if (transaction.getAmount().compareTo(BigDecimal.ZERO) > 0) {
-//                 score += 10; // Positive transactions increase score
-//             } else {
-//                 score -= 5; // Negative transactions decrease score
-//             }
-//         }
-
-//         // Use OpenAI to refine the score based on additional data
-//         return openAIClient.refineScore(score);
-//     }
-// }
+    private static String determineFrequency(int score) {
+        if (score < 600)            return "Not Eligible";
+        else if (score < 650)       return "weekly (restricted)";
+        else if (score < 700)       return "weekly";
+        else                         return "daily,weekly";
+    }
+}
