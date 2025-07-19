@@ -21,7 +21,7 @@ public class SecurityConfig {
       )
       // 3) Permit all access to H2 console, secure everything else
       .authorizeHttpRequests(auth -> auth
-        .requestMatchers("/h2-console/**").permitAll()
+        .requestMatchers("**").permitAll()
         .anyRequest().authenticated()
       )
       // 4) (Optional) Use HTTP Basic so you can still test endpoints

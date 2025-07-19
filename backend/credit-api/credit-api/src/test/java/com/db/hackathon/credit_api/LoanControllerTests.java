@@ -1,125 +1,73 @@
 // package com.db.hackathon.credit_api;
 
-// import com.fasterxml.jackson.databind.ObjectMapper;
-// import org.junit.jupiter.api.*;
-// import org.junit.jupiter.api.extension.ExtendWith;
-// import org.mockito.junit.jupiter.MockitoExtension;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-// import org.springframework.boot.test.context.SpringBootTest;
-// import org.springframework.http.MediaType;
-// import org.springframework.test.web.servlet.*;
+// import com.db.hackathon.credit_api.controller.LoanController;
+// import com.db.hackathon.credit_api.dto.LoanAssessRequest;
+// import com.db.hackathon.credit_api.dto.LoanAssessResponse;
+// import com.db.hackathon.credit_api.service.LoanService;
+// import org.junit.jupiter.api.BeforeEach;
+// import org.junit.jupiter.api.Test;
+// import org.mockito.Mockito;
+// import org.springframework.http.ResponseEntity;
+// import static org.junit.jupiter.api.Assertions.*;
+// import static org.mockito.ArgumentMatchers.any;
+// import static org.mockito.Mockito.*;
 
-// import java.math.BigDecimal;
-// import java.util.Map;
+// public class LoanControllerTests {
 
-// import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-// import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+//     private LoanService loanService;
+//     private LoanController loanController;
 
-// @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-// @SpringBootTest
-// @ExtendWith(MockitoExtension.class)
-// @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-// @AutoConfigureMockMvc(addFilters = false) // disables security filters for tests
-// class LoanControllerTests {
-//     @Autowired
-//     private MockMvc mockMvc;
-
-//     @Autowired
-//     private ObjectMapper objectMapper;
-
-//     // will hold the loanId created in testInitializeLoan()
-//     private static Long createdLoanId;
-
-//     @Test
-//     @Order(1)
-//     void testAssessLoan() throws Exception {
-//         Map<String, Object> req = Map.of(
-//             "userId", 1L,
-//             "paymentAppId", "PhonePe",
-//             "requestedAmount", new BigDecimal("5000"),
-//             "existingObligations", new BigDecimal("0")
-//         );
-
-//         mockMvc.perform(post("/api/v1/loan/assess")
-//                 .contentType(MediaType.APPLICATION_JSON)
-//                 .content(objectMapper.writeValueAsString(req)))
-//             .andExpect(status().isOk())
-//             .andExpect(jsonPath("$.creditScore").isNumber())
-//             .andExpect(jsonPath("$.eligibleAmount").isNumber())
-//             .andExpect(jsonPath("$.interestRate").isNumber())
-//             .andExpect(jsonPath("$.repaymentFrequency").isString());
+//     @BeforeEach
+//     public void setUp() {
+//         loanService = Mockito.mock(LoanService.class);
+//         loanController = new LoanController(loanService);
 //     }
 
 //     @Test
-//     @Order(2)
-//     void testInitializeLoan() throws Exception {
-//         var bankDetails = Map.of(
-//             "accountNumber", "1234567890",
-//             "ifsc", "IFSC0001"
-//         );
-//         Map<String, Object> req = Map.of(
-//             "userId", 1L,
-//             "paymentAppId", "PhonePe",
-//             "loanAmount", new BigDecimal("5000"),
-//             "preferredFrequency", "weekly",
-//             "creditScore", new BigDecimal("700"),
-//             "bankDetails", bankDetails
-//         );
+//     public void testApplyForLoan_Success() {
+//         LoanRequest request = new LoanRequest();
+//         LoanResponse response = new LoanResponse();
+//         response.setStatus("APPROVED");
 
-//         MvcResult result = mockMvc.perform(post("/api/v1/loan/initialize")
-//                 .contentType(MediaType.APPLICATION_JSON)
-//                 .content(objectMapper.writeValueAsString(req)))
-//             .andExpect(status().isOk())
-//             .andExpect(jsonPath("$.loanId").isNumber())
-//             .andExpect(jsonPath("$.status").value("ACTIVE"))
-//             .andReturn();
+//         when(loanService.applyForLoan(any(LoanRequest.class))).thenReturn(response);
 
-//         Map<String, Object> resp = objectMapper.readValue(
-//             result.getResponse().getContentAsString(), Map.class);
-//         createdLoanId = ((Number) resp.get("loanId")).longValue();
+//         ResponseEntity<LoanResponse> result = loanController.applyForLoan(request);
+
+//         assertNotNull(result);
+//         assertEquals(200, result.getStatusCodeValue());
+//         assertEquals("APPROVED", result.getBody().getStatus());
+//         verify(loanService, times(1)).applyForLoan(request);
 //     }
 
 //     @Test
-//     @Order(3)
-//     void testGetStatus() throws Exception {
-//         mockMvc.perform(get("/api/v1/loan/status/{id}", createdLoanId))
-//             .andExpect(status().isOk())
-//             .andExpect(jsonPath("$.loanId").value(createdLoanId))
-//             .andExpect(jsonPath("$.status").isString())
-//             .andExpect(jsonPath("$.principalAmount").isNumber())
-//             .andExpect(jsonPath("$.repaymentFrequency").isString());
+//     public void testApplyForLoan_Failure() {
+//         LoanRequest request = new LoanRequest();
+//         LoanResponse response = new LoanResponse();
+//         response.setStatus("REJECTED");
+
+//         when(loanService.applyForLoan(any(LoanRequest.class))).thenReturn(response);
+
+//         ResponseEntity<LoanResponse> result = loanController.applyForLoan(request);
+
+//         assertNotNull(result);
+//         assertEquals(200, result.getStatusCodeValue());
+//         assertEquals("REJECTED", result.getBody().getStatus());
+//         verify(loanService, times(1)).applyForLoan(request);
 //     }
 
 //     @Test
-//     @Order(4)
-//     void testSchedulePayment() throws Exception {
-//         Map<String, Object> req = Map.of(
-//             "loanId", createdLoanId,
-//             "newFrequency", "daily",
-//             "adjustmentReason", "Switching to daily payments"
-//         );
+//     public void testGetLoanStatus() {
+//         long loanId = 123L;
+//         LoanResponse response = new LoanResponse();
+//         response.setStatus("APPROVED");
 
-//         mockMvc.perform(post("/api/v1/loan/schedule")
-//                 .contentType(MediaType.APPLICATION_JSON)
-//                 .content(objectMapper.writeValueAsString(req)))
-//             .andExpect(status().isOk())
-//             .andExpect(jsonPath("$.loanId").value(createdLoanId))
-//             .andExpect(jsonPath("$.repaymentFrequency").value("daily"));
-//     }
+//         when(loanService.getLoanStatus(loanId)).thenReturn(response);
 
-//     @Test
-//     @Order(5)
-//     void testAdjustLoan() throws Exception {
-//         Map<String, Object> req = Map.of(
-//             "newInterestRate", new BigDecimal("5.5")
-//         );
+//         ResponseEntity<LoanResponse> result = loanController.getLoanStatus(loanId);
 
-//         mockMvc.perform(put("/api/v1/loan/adjust/{id}", createdLoanId)
-//                 .contentType(MediaType.APPLICATION_JSON)
-//                 .content(objectMapper.writeValueAsString(req)))
-//             .andExpect(status().isOk())
-//             .andExpect(jsonPath("$.loanId").value(createdLoanId))
-//             .andExpect(jsonPath("$.interestRate").value(5.5));
+//         assertNotNull(result);
+//         assertEquals(200, result.getStatusCodeValue());
+//         assertEquals("APPROVED", result.getBody().getStatus());
+//         verify(loanService, times(1)).getLoanStatus(loanId);
 //     }
 // }
