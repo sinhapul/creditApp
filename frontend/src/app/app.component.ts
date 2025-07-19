@@ -3,11 +3,12 @@ import {CommonModule} from '@angular/common';
 import {RouterOutlet} from '@angular/router';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {first, map, tap} from "rxjs/operators";
+import { WelcomeComponent } from "./welcome/welcome.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, WelcomeComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

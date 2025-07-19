@@ -1,0 +1,71 @@
+<div class="form-wrapper">
+  <div class="form-box">
+    <h2>Step {{ step }} of 4</h2>
+
+    <!-- Step 1: Aadhaar Verification -->
+    <div *ngIf="step === 1" class="step-card">
+      <h3>Aadhaar Verification</h3>
+      <label>Aadhaar Number</label>
+      <input [(ngModel)]="formData.aadhaar" type="text" placeholder="Enter Aadhaar" maxlength="12" />
+
+      <label>Enter OTP</label>
+      <input [(ngModel)]="formData.otp" type="text" placeholder="Enter OTP" />
+
+      <button (click)="nextStep()">Verify & Next</button>
+    </div>
+
+    <!-- Step 2: Document Upload -->
+    <div *ngIf="step === 2" class="step-card">
+      <h3>Upload Document</h3>
+      <label>Document Type</label>
+      <select [(ngModel)]="formData.documentType">
+        <option value="">-- Select Type --</option>
+        <option value="electricity">Electricity Bill</option>
+        <option value="water">Water Bill</option>
+        <option value="school">School Receipt</option>
+        <option value="property">Property Document</option>
+      </select>
+
+      <label>Provider</label>
+      <select [(ngModel)]="formData.provider">
+        <option value="">-- Select Provider --</option>
+        <option value="bescom">BESCOM</option>
+        <option value="bwssb">BWSSB</option>
+        <option value="myschool">MySchool Pvt Ltd</option>
+      </select>
+
+      <label>Upload Document</label>
+      <input type="file" (change)="onFileUpload($event)" />
+
+      <button (click)="prevStep()">Back</button>
+      <button (click)="nextStep()">Next</button>
+    </div>
+
+    <!-- Step 3: KYC -->
+    <div *ngIf="step === 3" class="step-card">
+      <h3>KYC Verification</h3>
+      <label>Select KYC Method</label>
+      <select [(ngModel)]="formData.kycMethod">
+        <option value="">-- Select Method --</option>
+        <option value="video">Video (PAN)</option>
+        <option value="offline">Offline (Fingerprint)</option>
+      </select>
+
+      <p *ngIf="formData.kycMethod">KYC will be simulated. No real verification.</p>
+
+      <button (click)="prevStep()">Back</button>
+      <button (click)="nextStep()">Next</button>
+    </div>
+
+    <!-- Step 4: Consent and Submit -->
+    <div *ngIf="step === 4" class="step-card">
+      <h3>Consent & Submit</h3>
+      <label class="consent-label">
+        <input type="checkbox" [(ngModel)]="formData.consent" /> I agree to share my information for loan processing.
+      </label>
+
+      <button (click)="prevStep()">Back</button>
+      <button [disabled]="!formData.consent" (click)="submitForm()">Submit Application</button>
+    </div>
+  </div>
+</div>
