@@ -1,6 +1,8 @@
 -- USER: Apollo
-INSERT INTO users (username, phone_number, email)
-VALUES ('Apollo', '3333333333', 'apollo@example.com');
+INSERT INTO users (
+  username, phone_number, email, age, location, gender, water_bill, electricity_bill, property_papers, credit_score) VALUES (
+    'Apollo','3333333333', 'apollo@example.com', 65,'Bangalore', 'Female', 15440.00, 166.00, TRUE, 500);
+
 
 -- LOAN for Apollo
 INSERT INTO loans (user_id, principal_amount, interest_rate, repayment_frequency, start_date, end_date, status)
