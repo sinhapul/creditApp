@@ -1,0 +1,121 @@
+.chatbot-icon {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #00c853;
+  color: white;
+  font-size: 30px;
+  border-radius: 50%;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  cursor: pointer;
+  animation: pulse 2s infinite;
+  z-index: 999;
+  transition: transform 0.2s;
+}
+.chatbot-icon:hover {
+  transform: scale(1.1);
+}
+
+.chat-window {
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  width: 350px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  z-index: 999;
+  animation: slideUp 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+}
+
+.chat-header {
+  background: #00c853;
+  color: white;
+  padding: 10px 15px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.chat-body {
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.lang-select {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.user {
+  align-self: flex-end;
+  background: #e0f7fa;
+  padding: 10px 15px;
+  border-radius: 18px 18px 0 18px;
+  max-width: 80%;
+  font-size: 15px;
+}
+
+.bot {
+  align-self: flex-start;
+  background: #f1f8e9;
+  padding: 10px 15px;
+  border-radius: 18px 18px 18px 0;
+  max-width: 80%;
+  font-size: 15px;
+}
+
+.chat-input-area {
+  display: flex;
+  gap: 8px;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.send-btn {
+  background: #00c853;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0,200,83, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(0,200,83, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0,200,83, 0); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
