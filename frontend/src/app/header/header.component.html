@@ -1,6 +1,10 @@
 <header class="header">
   <div class="header-container">
     <div class="logo" [routerLink]="['/']" style="cursor: pointer;">🏠InclusionBank</div>
-    <button class="signin-btn">Sign In</button>
+    
+    <div class="action-buttons">
+      <button class="signin-btn" [routerLink]="['/training']">🎓 Training</button>
+      <button class="signin-btn">Sign In</button>
+    </div>
   </div>
 </header>

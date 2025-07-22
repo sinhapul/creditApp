@@ -6,5 +6,8 @@ export const routes: Routes = [
     },
     {
         path: 'apply', loadComponent: () => import('./apply-form/apply-form.component').then(m => m.ApplyFormComponent)
+    },
+    {
+        path: 'training', loadComponent: () => import('./digital-training/digital-training.component').then(m => m.DigitalTrainingComponent)
     }
 ];
