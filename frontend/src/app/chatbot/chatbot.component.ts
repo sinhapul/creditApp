@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { BackendService } from '../backend.service';
 
 @Component({
   selector: 'app-chatbot',
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './chatbot.component.html',
-  styleUrl: './chatbot.component.scss'
+  styleUrl: './chatbot.component.scss',
+  providers:[BackendService]
 })
 export class ChatbotComponent {
   isChatOpen = false;
@@ -15,26 +17,19 @@ export class ChatbotComponent {
   userInput = '';
   chatHistory: { sender: 'user' | 'bot', text: string }[] = [];
 
+  constructor(private service: BackendService) {}
+
   toggleChat() {
     this.isChatOpen = !this.isChatOpen;
   }
 
-  sendMessage() {
+  async sendMessage() {
     const msg = this.userInput.trim();
     if (!msg) return;
-
-    // Add user's message
     this.chatHistory.push({ sender: 'user', text: msg });
-
-    // Add bot response
-    const reply = this.selectedLang === 'hi'
-      ? 'हमारी वेबसाइट में आपका स्वागत है।'
-      : 'Welcome to our website';
-
-    setTimeout(() => {
-      this.chatHistory.push({ sender: 'bot', text: reply });
-    }, 300); // simulate delay
-
+    this.service.response(msg).subscribe((res:any) => {
+      this.chatHistory.push({ sender: 'bot', text: res.reply });
+    });
     this.userInput = '';
   }
 
