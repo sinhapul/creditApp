@@ -98,7 +98,7 @@ public class OpenAIClient {
         Map<String, Object> body = Map.of(
             "model", "gpt-4o-mini",
             "messages", List.of(system, userMasg),
-            "max_tokens", 20
+            "max_tokens", 1000
         );
 
         HttpEntity<Map<String, Object>> req = new HttpEntity<>(body, headers);
