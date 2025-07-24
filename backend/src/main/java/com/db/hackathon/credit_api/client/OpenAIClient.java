@@ -67,7 +67,7 @@ public class OpenAIClient {
             "content", Map.of(
                 "profile", Map.of(
                     "id", user.getId(),
-                    "name", user.getName(),
+                    "name", user.getUserId(),
                     "phoneNumber", user.getPhoneNumber(),
                     "email", user.getEmail()
                 ),
