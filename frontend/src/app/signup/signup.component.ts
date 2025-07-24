@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { BackendService } from '../backend.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -10,6 +12,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './signup.component.scss'
 })
 export class SignupComponent {
+
+  constructor(private backService: BackendService, private router:Router) {}
 
   step = 1;
 
@@ -47,13 +51,21 @@ export class SignupComponent {
     }
 
     this.userIdError = '';
-    alert('🎉 Signup Successful!');
-    console.log('Signup Data:', {
-      mobile: this.mobile,
+
+    this.backService.signUp( {
+      phoneNumber: this.mobile,
       userId: this.userId,
       password: this.password
-    });
-    this.reset();
+    }).subscribe((res:any) => {
+      if(res.success) {
+        alert('🎉 Signup Successful!');
+        this.backService.setUserId(this.userId);
+        this.router.navigate(['/']);
+      } else {
+        alert(res.message);
+      }
+      this.reset();
+    })    
   }
 
   reset() {

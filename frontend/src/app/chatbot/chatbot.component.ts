@@ -8,8 +8,7 @@ import { BackendService } from '../backend.service';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './chatbot.component.html',
-  styleUrl: './chatbot.component.scss',
-  providers:[BackendService]
+  styleUrl: './chatbot.component.scss'
 })
 export class ChatbotComponent {
   isChatOpen = false;
