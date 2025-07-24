@@ -1,0 +1,90 @@
+/* Fullscreen container */
+.form-wrapper {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, #f9f9f9, #e8f5e9);
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* Form card */
+.step-card {
+  width: 100%;
+  max-width: 550px;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+  animation: fadeInSlideUp 0.6s ease-out;
+}
+
+/* Headings */
+h2 {
+  text-align: center;
+  color: #2E7D32;
+  margin-bottom: 1.2rem;
+}
+
+/* Labels and Inputs */
+label {
+  display: block;
+  margin-top: 1.2rem;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  color: #333;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.7rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: border 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+/* Button */
+button {
+  margin-top: 1.8rem;
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #388E3C;
+  transform: scale(1.04);
+}
+
+/* Error message */
+.error {
+  margin-top: 0.5rem;
+  color: red;
+  font-size: 0.9rem;
+}
+
+/* Animation */
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
