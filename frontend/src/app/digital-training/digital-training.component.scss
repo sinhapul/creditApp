@@ -1,0 +1,83 @@
+.training-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 24px;
+  background: #f0fff4;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 128, 0, 0.2);
+  text-align: center;
+  animation: fadeIn 0.6s ease-in;
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #2e7d32;
+  margin-bottom: 16px;
+}
+
+.image {
+  width: 220px;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 2px solid #c8e6c9;
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+.command {
+  font-size: 1.1rem;
+  color: #333;
+  padding: 0 16px;
+  margin-bottom: 20px;
+}
+
+.navigation button {
+  background-color: #43a047;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  margin: 0 6px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.navigation button:disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
+}
+
+.step-indicator {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.step-indicator span {
+  width: 10px;
+  height: 10px;
+  background: #c8e6c9;
+  border-radius: 50%;
+  margin: 0 4px;
+  transition: background 0.3s;
+}
+
+.step-indicator span.active {
+  background: #2e7d32;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}

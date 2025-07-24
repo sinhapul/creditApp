@@ -1,0 +1,16 @@
+<div class="training-container">
+  <h2 class="title">{{ tutorials[step].title }}</h2>
+
+  <img [src]="tutorials[step].image" class="image pulse" alt="Training Step Image">
+
+  <p class="command">{{ tutorials[step].command }}</p>
+
+  <div class="navigation">
+    <button (click)="prev()" [disabled]="step === 0">⬅️ पिछला</button>
+    <button (click)="next()" [disabled]="step === tutorials.length - 1">आगे ➡️</button>
+  </div>
+
+  <div class="step-indicator">
+    <span *ngFor="let t of tutorials; let i = index" [class.active]="i === step"></span>
+  </div>
+</div>
