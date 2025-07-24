@@ -1,0 +1,83 @@
+<div class="track-page-container">
+  <!-- Dummy Loan Preview -->
+ <div class="loan-summary-card">
+    <h2>Loan Application Preview</h2>
+    <p><strong>Credit Score:</strong> 720</p>
+    <p><strong>Loan Type:</strong> Business Livelihood Loan</p>
+    <p><strong>Requested Amount:</strong> ₹3,50,000</p>
+
+    <button *ngIf="!durationSelected" class="register-btn" (click)="showDurationOptions = true">
+      Register / Apply Now
+    </button>
+
+    <!-- Duration Selection -->
+    <div *ngIf="showDurationOptions && !durationSelected" class="duration-selection">
+      <p><strong>Select Duration:</strong></p>
+      <button (click)="submitLoan(6)">6 Months</button>
+      <button (click)="submitLoan(12)">12 Months</button>
+      <button (click)="submitLoan(24)">2 Years</button>
+    </div>
+
+    <!-- Loan Approved -->
+    <div *ngIf="loanApproved && emi" class="approval-message">
+      ✅ Loan Approved
+      <div class="emi-details">
+        <p><strong>Loan Amount:</strong> ₹{{loanAmount}}</p>
+        <p><strong>Interest Rate:</strong> {{interestRate}}%</p>
+        <p><strong>Duration:</strong> {{selectedDuration}} months</p>
+        <p><strong>Monthly EMI:</strong> ₹{{emi}}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loan Details Tables -->
+  <div class="loan-details-section">
+    <h3>1. Business Livelihood Loans</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Credit Score</th>
+          <th>Loan Amount Range (₹)</th>
+          <th>Interest Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>650 - 700</td><td>₹50,000 – ₹5,00,000</td><td>14% - 24%</td></tr>
+        <tr><td>700 - 750</td><td>₹1,00,000 – ₹10,00,000</td><td>12% - 18%</td></tr>
+        <tr><td>750 - 800</td><td>₹2,00,000 – ₹20,00,000+</td><td>10% - 15%</td></tr>
+      </tbody>
+    </table>
+
+    <h3>2. Emergency Loans</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Credit Score</th>
+          <th>Loan Amount Range (₹)</th>
+          <th>Interest Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>650 - 700</td><td>₹10,000 – ₹1,00,000</td><td>18% - 28%</td></tr>
+        <tr><td>700 - 750</td><td>₹20,000 – ₹2,00,000</td><td>14% - 20%</td></tr>
+        <tr><td>750 - 800</td><td>₹50,000 – ₹5,00,000</td><td>12% - 18%</td></tr>
+      </tbody>
+    </table>
+
+    <h3>3. Consumption Loans</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Credit Score</th>
+          <th>Loan Amount Range (₹)</th>
+          <th>Interest Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>650 - 700</td><td>₹5,000 – ₹50,000</td><td>20% - 30%</td></tr>
+        <tr><td>700 - 750</td><td>₹10,000 – ₹1,00,000</td><td>15% - 22%</td></tr>
+        <tr><td>750 - 800</td><td>₹20,000 – ₹2,00,000</td><td>12% - 18%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
