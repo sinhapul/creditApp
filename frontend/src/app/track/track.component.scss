@@ -112,3 +112,28 @@ th, td {
   border-radius: 10px;
   font-size: 1rem;
 }
+
+.loan-type-selector,
+.duration-selection {
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.loan-type-selector button,
+.duration-selection button {
+  margin: 0.4rem 0.5rem 0.4rem 0;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 25px;
+  background-color: #00796B;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.loan-type-selector button:hover,
+.duration-selection button:hover {
+  background-color: #004D40;
+}
+

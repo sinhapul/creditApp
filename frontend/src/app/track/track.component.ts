@@ -9,30 +9,47 @@ import { Component } from '@angular/core';
   styleUrl: './track.component.scss'
 })
 export class TrackComponent {
-  showDurationOptions = false;
+   showDurationOptions = false;
   durationSelected = false;
   loanApproved = false;
 
   loanAmount = 350000;
-  interestRate = 12; // Assume based on credit score
+  interestRate = 12;
   selectedDuration = 0;
+  selectedFrequency = '';
   emi: number | null = null;
 
-  // Called when a duration is selected
+  selectedLoanType: 'business' | 'emergency' = 'business'; // default
+  showEmergencyOptions = false;
+
+  // Called when Business Loan duration is selected
   submitLoan(duration: number) {
     this.selectedDuration = duration;
     this.durationSelected = true;
+    this.selectedLoanType = 'business';
+    this.calculateEMI(duration, 'monthly');
+  }
 
-    const monthlyInterestRate = this.interestRate / 12 / 100;
-    const n = duration;
+  // Emergency loan frequency submission
+  submitEmergencyLoan(frequency: string) {
+    this.selectedFrequency = frequency;
+    this.durationSelected = true;
+    this.selectedLoanType = 'emergency';
 
-    // EMI formula: [P × r × (1 + r)^n] / [(1 + r)^n – 1]
-    const r = monthlyInterestRate;
+    let duration = 0;
+    if (frequency === 'weekly') duration = 12;
+    if (frequency === 'bi-weekly') duration = 6;
+    if (frequency === 'monthly') duration = 3;
+
+    this.calculateEMI(duration, frequency);
+  }
+
+  calculateEMI(duration: number, frequency: string) {
+    const r = this.interestRate / 12 / 100;
     const P = this.loanAmount;
-    const emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+    const emi = (P * r * Math.pow(1 + r, duration)) / (Math.pow(1 + r, duration) - 1);
     this.emi = Math.round(emi);
 
-    // Simulate backend submission delay
     setTimeout(() => {
       this.loanApproved = true;
     }, 1000);
