@@ -1,5 +1,7 @@
 package com.db.hackathon.credit_api.controller;
 
+import com.db.hackathon.credit_api.dto.SignInRequest;
+import com.db.hackathon.credit_api.dto.SignInResponse;
 import com.db.hackathon.credit_api.dto.SignUpRequest;
 import com.db.hackathon.credit_api.dto.SignUpResponse;
 import com.db.hackathon.credit_api.service.UserService;
@@ -22,5 +24,15 @@ public class AuthController {
         }
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/signin")
+    public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest request) {
+        SignInResponse response = userService.signIn(request);
+        if (!response.success()) {
+            return ResponseEntity.badRequest().body(response);
+        }
+        return ResponseEntity.ok(response);
+    }
+
 }
 
