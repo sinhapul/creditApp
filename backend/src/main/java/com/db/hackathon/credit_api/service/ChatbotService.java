@@ -22,7 +22,7 @@ public class ChatbotService {
 
     public ChatResponse getChatReply(ChatRequest chatRequest) {
         // You can customize the system prompt as needed
-        String systemPrompt = "You are a helpful financial assistant and credit advisor. Always reply in the language used by the user.\r\n" + //
+        String systemPrompt = "You are a helpful financial assistant and credit advisor. Always reply in the language used by the user. The reply should be within 250 characters\r\n" + //
                         "";
         Map<String, Object> body = Map.of(
             "model", "gpt-4o-mini",
@@ -30,7 +30,7 @@ public class ChatbotService {
                 Map.of("role", "system", "content", systemPrompt),
                 Map.of("role", "user", "content", chatRequest.message())
             ),
-            "max_tokens", 150
+            "max_tokens", 1000
         );
 
         HttpHeaders headers = new HttpHeaders();
