@@ -29,4 +29,11 @@ export class HeaderComponent {
     this.cdr.detectChanges();
     this.router.navigate(['/']);
   }
+
+  handleTrack(event: Event) {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    if (selectedValue === 'track') {
+      this.router.navigate(['/track']);
+    }
+  }
 }
