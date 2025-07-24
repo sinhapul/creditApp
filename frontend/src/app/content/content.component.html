@@ -12,7 +12,7 @@
     <p *ngIf="user == ''">
       To apply for loan please sign up or sign in.
     </p>
-    <button *ngIf="user == ''" [routerLink]="['/apply']" class="apply-btn">Apply Now</button>
+    <button *ngIf="user != ''" [routerLink]="['/apply']" class="apply-btn">Apply Now</button>
   </div>
 
   <div class="hero-image">
@@ -55,9 +55,18 @@
       </div>
     </div>
   </section>
-</div>
-<!-- </div> -->
+  <section class="contact-us">
+  <h2>📞 Contact Us</h2>
+  <p class="contact-description">
+    Got questions or need help applying for a loan? We’re here for you!
+  </p>
 
-<!-- <div *ngIf="showApplyForm"> -->
-  <!-- <app-apply-form></app-apply-form> -->
-<!-- </div> -->
+ <form (ngSubmit)="submitContact()" #contactForm="ngForm" class="contact-form">
+  <input type="text" name="name" [(ngModel)]="contact.name" placeholder="Your Name" required />
+  <input type="email" name="email" [(ngModel)]="contact.email" placeholder="Your Email" required />
+  <textarea name="message" [(ngModel)]="contact.message" placeholder="Your Message" required></textarea>
+  <button class="contact-btn" type="submit">Send Message</button>
+</form>
+</section>
+
+</div>

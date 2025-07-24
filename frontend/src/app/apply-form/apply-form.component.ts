@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BackendService } from '../backend.service';
 import { Router } from '@angular/router';
+import { AlertService } from '../alert.service';
 
 @Component({
   selector: 'app-apply-form',
@@ -13,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class ApplyFormComponent {
 
-  constructor(private backendService: BackendService, private router: Router) {}
+  constructor(private backendService: BackendService, private router: Router, private alert: AlertService) {}
 
   step = 1;
 
@@ -47,7 +48,7 @@ export class ApplyFormComponent {
 
   submitForm() {
     console.log('Form submitted:', this.formData);
-    alert('Application submitted successfully!');
+    this.alert.showAlert('success', 'Application submitted successfully!');
     this.router.navigate(['/']);
 
     // this.backendService.fetch();
