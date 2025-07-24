@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AlertService } from '../alert.service';
+import { BackendService } from '../backend.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -10,6 +13,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './signin.component.scss'
 })
 export class SigninComponent {
+  constructor(private alert: AlertService, private backendService: BackendService, private router: Router) {}
    username = '';
   password = '';
   error = '';
@@ -20,12 +24,25 @@ export class SigninComponent {
       return;
     }
 
-    // Simulate sign-in success
+
     console.log('User signed in:', {
-      username: this.username,
+      userId: this.username,
       password: this.password
     });
-    alert('✅ Signed in successfully!');
+    this.backendService.signIn({
+      userId: this.username,
+      password: this.password
+    }).subscribe((res:any) => {
+      if(res.success)
+      {
+        this.alert.showAlert('success', 'Succesful Sig In!');
+        this.router.navigate(['/']);
+        this.backendService.setUserId(this.username);
+      }
+    else {
+      this.alert.showAlert('danger', ' Sig In Failed!'); 
+    }
+    });
     this.error = '';
   }
 }

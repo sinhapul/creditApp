@@ -26,9 +26,6 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest request) {
         SignInResponse response = userService.signIn(request);
-        if (!response.success()) {
-            return ResponseEntity.badRequest().body(response);
-        }
         return ResponseEntity.ok(response);
     }
 
