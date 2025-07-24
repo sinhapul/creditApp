@@ -1,16 +1,16 @@
-<div class="training-container">
-  <h2 class="title">{{ tutorials[step].title }}</h2>
+<div class="training-wrapper">
+  <div class="training-card">
+    <h2>🎯 Your Progress Steps</h2>
+    <p class="subtitle">Complete these actions to unlock rewards!</p>
 
-  <img [src]="tutorials[step].image" class="image pulse" alt="Training Step Image">
-
-  <p class="command">{{ tutorials[step].command }}</p>
-
-  <div class="navigation">
-    <button (click)="prev()" [disabled]="step === 0">⬅️ पिछला</button>
-    <button (click)="next()" [disabled]="step === tutorials.length - 1">आगे ➡️</button>
-  </div>
-
-  <div class="step-indicator">
-    <span *ngFor="let t of tutorials; let i = index" [class.active]="i === step"></span>
+    <div class="step-list">
+      <div class="step-item" *ngFor="let s of steps">
+        <div class="step-number">Step {{ s.step }}</div>
+        <div class="step-content">
+          <div class="action">{{ s.action }}</div>
+          <div class="reward">🏆 {{ s.reward }}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
