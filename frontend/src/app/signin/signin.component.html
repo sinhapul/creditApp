@@ -1,0 +1,15 @@
+<div class="form-wrapper">
+  <div class="step-card">
+    <h2>🔑 Sign In</h2>
+
+    <label for="username">Username</label>
+    <input type="text" id="username" [(ngModel)]="username" placeholder="Enter your username" />
+
+    <label for="password">Password</label>
+    <input type="password" id="password" [(ngModel)]="password" placeholder="Enter your password" />
+
+    <div *ngIf="error" class="error">{{ error }}</div>
+
+    <button (click)="signIn()">Sign In</button>
+  </div>
+</div>

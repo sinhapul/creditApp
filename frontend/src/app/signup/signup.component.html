@@ -1,0 +1,34 @@
+<div class="form-wrapper">
+  <div class="step-card">
+
+    <!-- Step 1: Mobile + OTP -->
+    <div *ngIf="step === 1">
+      <h2>📱 Step 1: Verify Mobile</h2>
+
+      <label for="mobile">Mobile Number</label>
+      <input type="text" id="mobile" [(ngModel)]="mobile" maxlength="10" placeholder="Enter 10-digit mobile number" />
+
+      <label for="otp">OTP</label>
+      <input type="text" id="otp" [(ngModel)]="otp" maxlength="4" placeholder="Enter OTP (Use 1234)" />
+
+      <div *ngIf="otpError" class="error">{{ otpError }}</div>
+
+      <button (click)="verifyOtp()">Verify OTP</button>
+    </div>
+
+    <!-- Step 2: User ID + Password -->
+    <div *ngIf="step === 2">
+      <h2>🔐 Step 2: Create Account</h2>
+
+      <label for="userId">User ID</label>
+      <input type="text" id="userId" [(ngModel)]="userId" placeholder="User ID (min 5 characters)" />
+      <div *ngIf="userIdError" class="error">{{ userIdError }}</div>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" [(ngModel)]="password" placeholder="Choose your password" />
+
+      <button (click)="completeSignup()">Complete Signup</button>
+    </div>
+
+  </div>
+</div>
