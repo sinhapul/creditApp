@@ -24,25 +24,36 @@ export class TrackComponent {
 
   // Called when Business Loan duration is selected
   submitLoan(duration: number) {
-    this.selectedDuration = duration;
-    this.durationSelected = true;
-    this.selectedLoanType = 'business';
-    this.calculateEMI(duration, 'monthly');
-  }
+  this.selectedDuration = duration;
+  this.durationSelected = true;
+  this.selectedLoanType = 'business';
+
+  // Restore original values for business loan
+  this.loanAmount = 350000;
+  this.interestRate = 12;
+
+  this.calculateEMI(duration, 'monthly');
+}
+
 
   // Emergency loan frequency submission
   submitEmergencyLoan(frequency: string) {
-    this.selectedFrequency = frequency;
-    this.durationSelected = true;
-    this.selectedLoanType = 'emergency';
+  this.selectedFrequency = frequency;
+  this.durationSelected = true;
+  this.selectedLoanType = 'emergency';
 
-    let duration = 0;
-    if (frequency === 'weekly') duration = 12;
-    if (frequency === 'bi-weekly') duration = 6;
-    if (frequency === 'monthly') duration = 3;
+  // Lower amount and higher interest rate for emergency
+  this.loanAmount = 30000;
+  this.interestRate = 18;
 
-    this.calculateEMI(duration, frequency);
-  }
+  let duration = 0;
+  if (frequency === 'weekly') duration = 12;      // 3 months weekly
+  if (frequency === 'bi-weekly') duration = 6;    // 3 months bi-weekly
+  if (frequency === 'monthly') duration = 3;      // 3 months monthly
+
+  this.calculateEMI(duration, frequency);
+}
+
 
   calculateEMI(duration: number, frequency: string) {
     const r = this.interestRate / 12 / 100;
