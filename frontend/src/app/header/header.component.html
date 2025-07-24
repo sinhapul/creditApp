@@ -4,8 +4,10 @@
     
     <div class="action-buttons">
       <button class="signin-btn" [routerLink]="['/training']">🎓 Training</button>
-      <button class="signin-btn" [routerLink]="['/signin']">Sign In</button>
-      <button class="signin-btn" [routerLink]="['/signup']">Sign Up</button>
+      <button *ngIf="userId == ''" class="signin-btn" [routerLink]="['/signin']">Sign In</button>
+      <button *ngIf="userId == ''" class="signin-btn" [routerLink]="['/signup']">Sign Up</button>
+      <button *ngIf="userId != ''" class="signin-btn" >{{userId}}</button>
+      <button *ngIf="userId != ''" class="signin-btn" (click)="logOut()">Log Out</button>
     </div>
   </div>
 </header>
