@@ -9,5 +9,11 @@ export const routes: Routes = [
     },
     {
         path: 'training', loadComponent: () => import('./digital-training/digital-training.component').then(m => m.DigitalTrainingComponent)
+    },
+    {
+       path: 'signup', loadComponent: () => import('./signup/signup.component').then(m => m.SignupComponent) 
+    },
+    {
+       path: 'signin', loadComponent: () => import('./signin/signin.component').then(m => m.SigninComponent) 
     }
 ];
