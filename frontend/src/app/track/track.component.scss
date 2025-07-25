@@ -1,0 +1,139 @@
+.track-page-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  background: #f4fdf5;
+}
+
+.loan-summary-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+  animation: fadeSlideUp 0.5s ease;
+}
+
+.loan-summary-card h2 {
+  color: #2E7D32;
+  margin-bottom: 1rem;
+}
+
+.loan-summary-card p {
+  margin: 0.4rem 0;
+  font-size: 1.05rem;
+}
+
+.register-btn {
+  margin-top: 1rem;
+  background-color: #4CAF50;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.register-btn:hover {
+  background-color: #388E3C;
+}
+
+.approval-message {
+  margin-top: 1rem;
+  color: #2E7D32;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.loan-details-section h3 {
+  color: #333;
+  margin-top: 2rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.8rem;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+table thead {
+  background-color: #e8f5e9;
+}
+
+th, td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.duration-selection {
+  margin-top: 1rem;
+}
+
+.duration-selection button {
+  margin: 0.3rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: none;
+  background-color: #81C784;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.duration-selection button:hover {
+  background-color: #66BB6A;
+}
+
+.emi-details {
+  margin-top: 1rem;
+  background: #f1fff1;
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.loan-type-selector,
+.duration-selection {
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.loan-type-selector button,
+.duration-selection button {
+  margin: 0.4rem 0.5rem 0.4rem 0;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 25px;
+  background-color: #00796B;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.loan-type-selector button:hover,
+.duration-selection button:hover {
+  background-color: #004D40;
+}
+

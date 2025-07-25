@@ -2,11 +2,26 @@
 
 <!-- <div *ngIf="!showApplyForm"> -->
   <div class="main-wrapper">
-  <section class="hero">
+<section class="hero-container">
+  <div class="hero-text">
     <h1>Financial Inclusion for All 💸</h1>
-    <p>Get loans using your electricity bill, school receipts, or property documents — no formal credit history required.</p>
-    <button [routerLink]="['/apply']" class="apply-btn">Apply Now</button>
-  </section>
+    <p>
+      Get loans using your utiltiy bills or property documents —
+      no formal credit history required.
+    </p>
+    <p *ngIf="user == ''">
+      To apply for loan please sign up or sign in.
+    </p>
+    <button *ngIf="user != ''" [routerLink]="['/apply']" class="apply-btn">Apply Now</button>
+  </div>
+
+  <div class="hero-image">
+    <img
+      src="/assets/farmer.jpg"
+      alt="Indian Farmer with Mobile"
+    />
+  </div>
+</section>
 
   <section class="how-it-works">
     <h2>How It Works</h2>
@@ -40,9 +55,18 @@
       </div>
     </div>
   </section>
-</div>
-<!-- </div> -->
+  <section class="contact-us">
+  <h2>📞 Contact Us</h2>
+  <p class="contact-description">
+    Got questions or need help applying for a loan? We’re here for you!
+  </p>
 
-<!-- <div *ngIf="showApplyForm"> -->
-  <!-- <app-apply-form></app-apply-form> -->
-<!-- </div> -->
+ <form (ngSubmit)="submitContact()" #contactForm="ngForm" class="contact-form">
+  <input type="text" name="name" [(ngModel)]="contact.name" placeholder="Your Name" required />
+  <input type="email" name="email" [(ngModel)]="contact.email" placeholder="Your Email" required />
+  <textarea name="message" [(ngModel)]="contact.message" placeholder="Your Message" required></textarea>
+  <button class="contact-btn" type="submit">Send Message</button>
+</form>
+</section>
+
+</div>

@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { BackendService } from '../backend.service';
+import { Router } from '@angular/router';
+import { AlertService } from '../alert.service';
 
 @Component({
   selector: 'app-apply-form',
@@ -10,20 +13,25 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './apply-form.component.scss'
 })
 export class ApplyFormComponent {
+
+  constructor(private backendService: BackendService, private router: Router, private alert: AlertService) {}
+
   step = 1;
 
   formData = {
-    aadhaar: '',
-    otp: '',
-    documentType: '',
-    provider: '',
-    uploadedFile: null,
-    kycMethod: '',
-    consent: false
-  };
+  aadhaar: '',
+  otp: '',
+  documentType: '',
+  provider: '',
+  loanType: '',
+  kycMethod: '',
+  consent: false,
+  uploadedFile: ''
+};
+
 
   nextStep() {
-    if (this.step < 4) {
+    if (this.step < 5) {
       this.step++;
     }
   }
@@ -40,7 +48,10 @@ export class ApplyFormComponent {
 
   submitForm() {
     console.log('Form submitted:', this.formData);
-    alert('Application submitted successfully!');
+    this.alert.showAlert('success', 'Application submitted successfully!');
+    this.router.navigate(['/']);
+
+    // this.backendService.fetch();
   }
 
 }

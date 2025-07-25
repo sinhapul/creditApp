@@ -1,13 +1,21 @@
 <header class="header">
   <div class="header-container">
-    <div class="logo" [routerLink]="['/']" style="cursor: pointer;">🏠InclusionBank</div>
+    <div class="logo" [routerLink]="['/']" style="cursor: pointer;">🏠FinPower</div>
     
     <div class="action-buttons">
       <button class="signin-btn" [routerLink]="['/training']">🎓 Training</button>
+      <button class="signin-btn" [routerLink]="['/rewards']">🎓 Rewards</button>
       <button *ngIf="userId == ''" class="signin-btn" [routerLink]="['/signin']">Sign In</button>
       <button *ngIf="userId == ''" class="signin-btn" [routerLink]="['/signup']">Sign Up</button>
-      <button *ngIf="userId != ''" class="signin-btn" >{{userId}}</button>
       <button *ngIf="userId != ''" class="signin-btn" (click)="logOut()">Log Out</button>
+      <div *ngIf="userId !== ''" class="user-track-wrapper">
+  <span class="user-id">{{ userId }}</span>
+
+  <select class="track-dropdown" (change)="handleTrack($event)">
+    <option value="">-- Options --</option>
+    <option value="track">Track Application</option>
+  </select>
+</div>
     </div>
   </div>
 </header>

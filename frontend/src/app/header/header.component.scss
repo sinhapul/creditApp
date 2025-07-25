@@ -69,3 +69,33 @@
   display: flex;
   gap: 12px;
 }
+
+.user-track-wrapper {
+  color: white;
+  padding: 1.5rem 1.2rem 0.5rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #2e7d32; /* Optional background for visibility */
+  border-radius: 8px;
+}
+
+.user-id {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.track-dropdown {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.95rem;
+  cursor: pointer;
+  background-color: #fff;
+  color: #333;
+  transition: box-shadow 0.2s ease;
+}
+
+.track-dropdown:hover {
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}

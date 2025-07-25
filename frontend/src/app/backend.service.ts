@@ -42,4 +42,26 @@ export class BackendService {
     const apiUrl = 'http://localhost:8080/api/v1/auth/signup';
     return this.httpClient.post<any>(apiUrl, body,this.httpHeader);
   }
+
+   signIn(body:any): Observable<any> {
+    const apiUrl = 'http://localhost:8080/api/v1/auth/signin';
+    return this.httpClient.post<any>(apiUrl, body,this.httpHeader);
+  }
+
+
+  submitApplication() {
+    const apiUrl = 'http://localhost:8080/api/v1/auth/signup';
+    let user;
+    this.userId$.subscribe(res => {
+      user = res;
+    })
+    let body :any = {
+      userId : user,
+      age : 24,
+      gender : "Male",
+      electricityBill: 21771,
+      waterBill : 2611
+    };
+    this.httpClient.post<any>(apiUrl, body,this.httpHeader);
+  }
 }

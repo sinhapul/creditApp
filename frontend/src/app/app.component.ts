@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
       new google.translate.TranslateElement(
         {
           pageLanguage: 'en',
-          includedLanguages: 'hi,ur,en',
+          includedLanguages: 'hi,ur,en,kn,te',
           layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
         },
         'google_translate_element'

@@ -1,6 +1,6 @@
 <div class="form-wrapper">
   <div class="form-box">
-    <h2>Step {{ step }} of 4</h2>
+    <h2>Step {{ step }} of 5</h2>
 
     <!-- Step 1: Aadhaar Verification -->
     <div *ngIf="step === 1" class="step-card">
@@ -41,8 +41,23 @@
       <button (click)="nextStep()">Next</button>
     </div>
 
-    <!-- Step 3: KYC -->
+    <!-- ✅ New Step 3: Loan Type Selection -->
     <div *ngIf="step === 3" class="step-card">
+      <h3>Select Loan Type</h3>
+      <label>Loan Purpose</label>
+      <select [(ngModel)]="formData.loanType">
+        <option value="">-- Select Loan Type --</option>
+        <option value="business livelihood">Business</option>
+        <option value="emergency">Emergency Loan</option>
+        <option value="consumption">Consumption Loan</option>
+      </select>
+
+      <button (click)="prevStep()">Back</button>
+      <button [disabled]="!formData.loanType" (click)="nextStep()">Next</button>
+    </div>
+
+    <!-- Step 4: KYC -->
+    <div *ngIf="step === 4" class="step-card">
       <h3>KYC Verification</h3>
       <label>Select KYC Method</label>
       <select [(ngModel)]="formData.kycMethod">
@@ -54,18 +69,18 @@
       <p *ngIf="formData.kycMethod">KYC will be simulated. No real verification.</p>
 
       <button (click)="prevStep()">Back</button>
-      <button (click)="nextStep()">Next</button>
+      <button [disabled]="!formData.kycMethod" (click)="nextStep()">Next</button>
     </div>
 
-    <!-- Step 4: Consent and Submit -->
-    <div *ngIf="step === 4" class="step-card">
+    <!-- Step 5: Consent and Submit -->
+    <div *ngIf="step === 5" class="step-card">
       <h3>Consent & Submit</h3>
       <label class="consent-label">
         <input type="checkbox" [(ngModel)]="formData.consent" /> I agree to share my information for loan processing.
       </label>
 
       <button (click)="prevStep()">Back</button>
-      <button [disabled]="!formData.consent" (click)="submitForm()">Submit Application</button>
+      <button [disabled]="!formData.consent" (click)="submitForm()">Register Application</button>
     </div>
   </div>
 </div>

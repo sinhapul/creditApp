@@ -1,0 +1,95 @@
+<div class="track-page-container">
+  <!-- Dummy Loan Preview -->
+ <div class="loan-summary-card">
+  <h2>Loan Application Preview</h2>
+  <p><strong>Credit Score:</strong> 720</p>
+
+  <!-- Loan Type Selection -->
+  <div class="loan-type-selector" *ngIf="!showDurationOptions && !showEmergencyOptions && !durationSelected">
+    <p><strong>Select Loan Type:</strong></p>
+    <button (click)="showDurationOptions = true">Business Livelihood Loan</button>
+    <button (click)="showEmergencyOptions = true">Emergency Loan</button>
+  </div>
+
+  <!-- Business Loan Durations -->
+  <div *ngIf="showDurationOptions && !durationSelected" class="duration-selection">
+    <p><strong>Select Duration (Months):</strong></p>
+    <button (click)="submitLoan(6)">6 Months</button>
+    <button (click)="submitLoan(12)">12 Months</button>
+    <button (click)="submitLoan(24)">2 Years</button>
+  </div>
+
+  <!-- Emergency Loan Frequency -->
+  <div *ngIf="showEmergencyOptions && !durationSelected" class="duration-selection">
+    <p><strong>Select Repayment Frequency:</strong></p>
+    <button (click)="submitEmergencyLoan('weekly')">Weekly</button>
+    <button (click)="submitEmergencyLoan('bi-weekly')">Bi-Weekly</button>
+    <button (click)="submitEmergencyLoan('monthly')">Monthly</button>
+  </div>
+
+  <!-- Loan Approved -->
+  <div *ngIf="loanApproved && emi" class="approval-message">
+    ✅ Loan Approved
+    <div class="emi-details">
+      <p><strong>Loan Type:</strong> {{ selectedLoanType === 'business' ? 'Business Livelihood Loan' : 'Emergency Loan' }}</p>
+      <p><strong>Loan Amount:</strong> ₹{{loanAmount}}</p>
+      <p><strong>Interest Rate:</strong> {{interestRate}}%</p>
+      <p *ngIf="selectedLoanType === 'business'"><strong>Duration:</strong> {{selectedDuration}} months</p>
+      <p *ngIf="selectedLoanType === 'emergency'"><strong>Repayment:</strong> {{selectedFrequency}}</p>
+      <p><strong>EMI:</strong> ₹{{emi}}</p>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Loan Details Tables -->
+  <div class="loan-details-section">
+    <h3>1. Business Livelihood Loans</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Credit Score</th>
+          <th>Loan Amount Range (₹)</th>
+          <th>Interest Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>650 - 700</td><td>₹50,000 – ₹5,00,000</td><td>14% - 24%</td></tr>
+        <tr><td>700 - 750</td><td>₹1,00,000 – ₹10,00,000</td><td>12% - 18%</td></tr>
+        <tr><td>750 - 800</td><td>₹2,00,000 – ₹20,00,000+</td><td>10% - 15%</td></tr>
+      </tbody>
+    </table>
+
+    <h3>2. Emergency Loans</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Credit Score</th>
+          <th>Loan Amount Range (₹)</th>
+          <th>Interest Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>650 - 700</td><td>₹10,000 – ₹1,00,000</td><td>18% - 28%</td></tr>
+        <tr><td>700 - 750</td><td>₹20,000 – ₹2,00,000</td><td>14% - 20%</td></tr>
+        <tr><td>750 - 800</td><td>₹50,000 – ₹5,00,000</td><td>12% - 18%</td></tr>
+      </tbody>
+    </table>
+
+    <h3>3. Consumption Loans</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Credit Score</th>
+          <th>Loan Amount Range (₹)</th>
+          <th>Interest Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>650 - 700</td><td>₹5,000 – ₹50,000</td><td>20% - 30%</td></tr>
+        <tr><td>700 - 750</td><td>₹10,000 – ₹1,00,000</td><td>15% - 22%</td></tr>
+        <tr><td>750 - 800</td><td>₹20,000 – ₹2,00,000</td><td>12% - 18%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>

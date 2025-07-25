@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BackendService } from '../backend.service';
 import { Router } from '@angular/router';
+import { AlertService } from '../alert.service';
 
 @Component({
   selector: 'app-signup',
@@ -13,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class SignupComponent {
 
-  constructor(private backService: BackendService, private router:Router) {}
+  constructor(private backService: BackendService, private router:Router, private alert: AlertService) {}
 
   step = 1;
 
@@ -58,7 +59,8 @@ export class SignupComponent {
       password: this.password
     }).subscribe((res:any) => {
       if(res.success) {
-        alert('🎉 Signup Successful!');
+      
+        this.alert.showAlert('success', '🎉 Signup Successful');
         this.backService.setUserId(this.userId);
         this.router.navigate(['/']);
       } else {

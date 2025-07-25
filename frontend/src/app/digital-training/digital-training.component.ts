@@ -9,36 +9,11 @@ import { Component } from '@angular/core';
   styleUrl: './digital-training.component.scss'
 })
 export class DigitalTrainingComponent {
-step = 0;
-
-  tutorials = [
-    {
-      title: '📱 मोबाइल कैसे चलाएं',
-      image: '/assets/mobile.png',
-      command: 'फोन को पावर बटन से ऑन करें। फिर स्क्रीन पर ऊपर से नीचे स्लाइड कर के ऐप्स खोलें।',
-    },
-    {
-      title: '⬇️ UPI ऐप इंस्टॉल करें',
-      image: 'assets/playstore.png',
-      command: 'Play Store खोलें, "Paytm" टाइप करें और Install बटन दबाएं।',
-    },
-    {
-      title: '🔐 UPI सेटअप करें',
-      image: 'assets/paytm.png',
-      command: 'Paytm खोलें, बैंक जोड़ें और UPI PIN सेट करें। PIN गुप्त रखें।',
-    },
-    {
-      title: '💸 पैसे भेजें / QR स्कैन करें',
-      image: 'assets/scanpay.png',
-      command: 'QR को स्कैन करें या UPI ID पर पैसे भेजें। भुगतान करने के लिए "Pay" दबाएं।',
-    }
+steps = [
+    { step: 1, action: 'Aadhaar verified', reward: '₹5' },
+    { step: 2, action: 'Mobile linked to bank', reward: '₹5' },
+    { step: 3, action: 'First money transfer', reward: '₹10' },
+    { step: 4, action: 'Watched 3 literacy videos', reward: '₹5' },
+    { step: 5, action: 'Saved ₹100 in wallet', reward: '₹10 bonus' }
   ];
-
-  next() {
-    if (this.step < this.tutorials.length - 1) this.step++;
-  }
-
-  prev() {
-    if (this.step > 0) this.step--;
-  }
 }
