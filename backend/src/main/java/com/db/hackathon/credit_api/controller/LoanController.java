@@ -1,5 +1,7 @@
 package com.db.hackathon.credit_api.controller;
 
+import java.io.IOException;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.db.hackathon.credit_api.dto.CreditScoreRequest;
+import com.db.hackathon.credit_api.dto.CreditScoreResponse;
 import com.db.hackathon.credit_api.dto.LoanAdjustRequest;
 import com.db.hackathon.credit_api.dto.LoanAdjustResponse;
 import com.db.hackathon.credit_api.dto.LoanAssessRequest;
@@ -31,9 +35,15 @@ public class LoanController {
     private final CreditScoringService creditScoringService;
     private final LoanService loanService;
 
-     @PostMapping("/assess")
-    public ResponseEntity<LoanAssessResponse> assessLoan(@RequestBody LoanAssessRequest request) {
+    @PostMapping("/assess")
+    public ResponseEntity<LoanAssessResponse> assessLoan(@RequestBody LoanAssessRequest request) throws IOException {
         LoanAssessResponse response = creditScoringService.assessLoan(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/score")
+    public ResponseEntity<CreditScoreResponse> getScore(@RequestBody CreditScoreRequest request) throws IOException {
+        CreditScoreResponse response = creditScoringService.getCreditScore(request);
         return ResponseEntity.ok(response);
     }
 

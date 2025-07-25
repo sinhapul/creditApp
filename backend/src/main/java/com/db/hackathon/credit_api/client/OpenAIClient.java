@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -26,7 +27,7 @@ public class OpenAIClient {
     @Autowired
     private final RecordLoader recordLoader;
 
-    public OpenAIClient(@Value("${openai.api-key}") String apiKey, RecordLoader recordLoader) {
+    public OpenAIClient(@Value("${ayush}") String apiKey, RecordLoader recordLoader) {
         this.rest = new RestTemplate();
         this.apiKey = apiKey;
         this.recordLoader = recordLoader;
@@ -196,4 +197,78 @@ public class OpenAIClient {
         return parsed;
 
     }
+
+    public int getCreditScore(String userId, int age, String gender, String location, Integer electricityBill, Integer waterBill) throws IOException {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(apiKey);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+
+        String trainingData = recordLoader.getExamplesAsPrompt();
+
+        Map<String, Object> system = Map.of(
+            "role", "system",
+            "content", String.format("""
+            You are a credit-scoring assistant.  You will receive:
+              • profile: { age, gender, location, EC Bill, EC Bill Amount }
+
+            Give a score between 0 and 900 based on the following training data:
+
+            %s
+
+            Respond with exactly:
+            {
+              "creditScore": <integer between 0 and 900>
+            }
+            
+            The training data is a set of examples that you can use to understand how to score the user.
+            Each example is formatted as follows:
+                """, trainingData)
+        );
+
+        String inputPrompt = String.format("""
+            Age: %d
+            gender: %s
+            Location: %s
+            ec bill: %s
+            ec bill amount: %s
+            Output: Credit Score:
+            """, age, gender, location, electricityBill, waterBill);
+
+
+        Map<String, Object> userMasg = Map.of(
+            "role", "user",
+            "content", inputPrompt
+        );
+
+        Map<String, Object> body = Map.of(
+            "model", "gpt-4o-mini",
+            "messages", List.of(system, userMasg),
+            "max_tokens", 1000
+        );
+
+        HttpEntity<Map<String, Object>> req = new HttpEntity<>(body, headers);
+        ResponseEntity<Map> resp = rest.postForEntity(
+            OPENAI_URL,
+            req,
+            Map.class
+        );
+
+        String content = (String)((Map)((Map)((List)resp.getBody()
+                                              .get("choices")).get(0))
+                                    .get("message"))
+                           .get("content");
+        int parsed = 0;
+        try {
+            parsed = new com.fasterxml.jackson.databind.ObjectMapper()
+                        .readTree(content).get("creditScore").asInt();
+        } catch (com.fasterxml.jackson.core.JsonProcessingException e) {
+            throw new RuntimeException("Failed to parse credit score from OpenAI response", e);
+        }
+
+        return parsed;
+
+    }
+
 }
