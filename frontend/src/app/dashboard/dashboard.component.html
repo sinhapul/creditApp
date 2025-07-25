@@ -1,0 +1,46 @@
+<div class="grid grid-cols-2 grid-rows-2 gap-4 p-4 min-h-screen bg-gradient-to-br from-green-50 to-white animate-fadeIn">
+  
+  <!-- Profile Section -->
+  <div class="section-card bg-green-100 shadow-xl rounded-2xl flex flex-col items-center justify-center">
+    <h2 class="text-2xl font-bold text-green-900 mb-4">👤 Profile</h2>
+    <p class="text-gray-700">User: {{userId}}</p>
+    <p class="text-gray-700">Location: Bihar</p>
+    <p class="text-gray-700">Credit Score: 720</p>
+  </div>
+
+  <!-- Types of Loan -->
+  <div class="section-card bg-white border border-green-200 shadow-lg rounded-2xl p-4 overflow-auto">
+    <h2 class="text-2xl font-bold text-green-800 mb-4">💼 Types of Loan</h2>
+    <div class="grid grid-cols-2 gap-4">
+     <a
+  *ngFor="let loan of loans"
+  [routerLink]="['/track']"
+  class="loan-type hover:scale-105 hover:bg-green-100 duration-300 p-3 bg-green-50 rounded-xl text-green-900 font-semibold shadow-sm text-center block cursor-pointer"
+>
+  {{ loan }}
+</a>
+    </div>
+  </div>
+
+  <!-- Government Schemes -->
+  <div class="section-card bg-green-50 p-4 rounded-2xl border border-green-300 shadow-md">
+    <h2 class="text-2xl font-bold text-green-800 mb-4">🏛️ Govt. Schemes</h2>
+    <ul class="space-y-2">
+      <li *ngFor="let scheme of schemes" class="bg-white p-2 rounded-lg shadow-sm hover:bg-green-100 transition">
+        ✅ {{ scheme }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Personal Rewards -->
+  <div class="section-card bg-white rounded-2xl shadow-md p-4 border border-green-200">
+    <h2 class="text-2xl font-bold text-green-800 mb-4">🎖️ Personal Rewards</h2>
+    <div class="space-y-3">
+      <div *ngFor="let reward of rewards"
+        class="flex items-center justify-between bg-green-50 p-2 rounded-lg hover:bg-green-100 transition">
+        <span>{{ reward.label }}</span>
+        <span class="font-bold text-green-700">+{{ reward.points }} pts</span>
+      </div>
+    </div>
+  </div>
+</div>

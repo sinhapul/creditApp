@@ -22,6 +22,9 @@ export const routes: Routes = [
     ,
     {
         path: 'training', loadComponent: () => import('./learning/learning.component').then(m => m.LearningComponent)
+    },
+    {
+        path: 'dashboard', loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent)
     }
     // {
     //    path: '', loadComponent: () => import('./track/track.component').then(m => m.TrackComponent) 
