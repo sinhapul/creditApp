@@ -11,10 +11,11 @@
       <div *ngIf="userId !== ''" class="user-track-wrapper">
   <span class="user-id">{{ userId }}</span>
 
-  <select class="track-dropdown" (change)="handleTrack($event)">
-    <option value="">-- Options --</option>
-    <option value="track">Track Application</option>
-  </select>
+ <select class="track-dropdown" (change)="handleTrack($event)">
+  <option value="dashboard" selected>Dashboard</option>
+  <option value="track">Track Application</option>
+</select>
+
 </div>
     </div>
   </div>

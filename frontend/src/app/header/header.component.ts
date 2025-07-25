@@ -31,9 +31,11 @@ export class HeaderComponent {
   }
 
   handleTrack(event: Event) {
-    const selectedValue = (event.target as HTMLSelectElement).value;
-    if (selectedValue === 'track') {
-      this.router.navigate(['/track']);
-    }
+  const selectedValue = (event.target as HTMLSelectElement).value;
+  if (selectedValue === 'track') {
+    this.router.navigate(['/track']);
+  } else if (selectedValue === 'dashboard') {
+    this.router.navigate(['/dashboard']);
   }
+}
 }

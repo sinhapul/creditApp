@@ -41,3 +41,17 @@ ul, ol {
     transform: translateY(0);
   }
 }
+
+.video-container {
+  max-width: 600px;
+  margin: 1rem auto;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
