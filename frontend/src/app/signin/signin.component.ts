@@ -36,7 +36,8 @@ export class SigninComponent {
       if(res.success)
       {
         this.alert.showAlert('success', 'Succesful Sig In!');
-        this.router.navigate(['/']);
+        this.backendService.setUserId(res.userId); // Or however you set it
+        this.router.navigate(['/dashboard']);
         this.backendService.setUserId(this.username);
       }
     else {

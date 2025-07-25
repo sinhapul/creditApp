@@ -61,8 +61,9 @@ export class SignupComponent {
       if(res.success) {
       
         this.alert.showAlert('success', '🎉 Signup Successful');
+        // Or however you set it
+        this.router.navigate(['/dashboard']);
         this.backService.setUserId(this.userId);
-        this.router.navigate(['/']);
       } else {
         alert(res.message);
       }
