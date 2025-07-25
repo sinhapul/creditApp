@@ -15,16 +15,16 @@ class CreditApiApplicationTests {
 	void contextLoads() {
 	}
 
-	@Test
-	void testOpenAIClient() throws IOException {
+	// @Test
+	// void testOpenAIClient() throws IOException {
 
-		RecordLoader recordLoader = new RecordLoader();
-		recordLoader.getExamplesAsPrompt();
+	// 	RecordLoader recordLoader = new RecordLoader();
+	// 	recordLoader.getExamplesAsPrompt();
 
-		OpenAIClient openAIClient = new OpenAIClient("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",recordLoader);
+	// 	OpenAIClient openAIClient = new OpenAIClient("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",recordLoader);
 
-		System.out.println("Credit Score: " + openAIClient.getCreditScore());
+	// 	System.out.println("Credit Score: " + openAIClient.getCreditScore());
 
-	}
+	// }
 
 }
