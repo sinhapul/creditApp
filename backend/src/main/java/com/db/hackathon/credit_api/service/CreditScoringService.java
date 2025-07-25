@@ -2,6 +2,8 @@
 package com.db.hackathon.credit_api.service;
 
 import com.db.hackathon.credit_api.client.OpenAIClient;
+import com.db.hackathon.credit_api.dto.CreditScoreRequest;
+import com.db.hackathon.credit_api.dto.CreditScoreResponse;
 import com.db.hackathon.credit_api.dto.LoanAssessRequest;
 import com.db.hackathon.credit_api.dto.LoanAssessResponse;
 import com.db.hackathon.credit_api.entity.Transaction;
@@ -11,6 +13,7 @@ import com.db.hackathon.credit_api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,20 +25,20 @@ public class CreditScoringService {
     private final TransactionRepository txnRepo;
     private final OpenAIClient openAIClient;
 
-    public LoanAssessResponse assessLoan(LoanAssessRequest req) {
+    public LoanAssessResponse assessLoan(LoanAssessRequest req) throws IOException {
         // 1) load user
-        User user = userRepo.findById(req.userId())
+        User user = userRepo.findByUserId(req.userId())
             .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         // 2) fetch last‑N transactions (assumes repo method exists)
-        List<Transaction> txns = txnRepo
-            .findByUserIdOrderByPaymentDateDesc(user.getId())
-            .stream()
-            .limit(10)
-            .collect(Collectors.toList());
+        // List<Transaction> txns = txnRepo
+        //     .findByUserIdOrderByPaymentDateDesc(user.getId())
+        //     .stream()
+        //     .limit(10)
+        //     .collect(Collectors.toList());
 
         // 3) ask the LLM for a credit score
-        int score = openAIClient.getCreditScore(user, txns);
+        int score = openAIClient.getCreditScore(user.getUserId(), user.getAge(), user.getGender(), user.getLocation(), user.getElectricityBill(), user.getWaterBill());
 
         // 4) compute eligible amount
         BigDecimal eligible = req.requestAmount()
@@ -61,5 +64,10 @@ public class CreditScoringService {
         else if (score < 650)       return "weekly (restricted)";
         else if (score < 700)       return "weekly";
         else                         return "daily,weekly";
+    }
+    
+    public CreditScoreResponse getCreditScore(CreditScoreRequest req) throws IOException {
+        int score = openAIClient.getCreditScore(req.userId(), req.age(), req.gender(), req.location(), req.electricityBill(), req.waterBill());
+        return new CreditScoreResponse(score);
     }
 }

@@ -34,13 +34,13 @@ public class User {
     private String gender;
 
     @Column(name = "water_bill", precision = 10, scale = 2)
-    private BigDecimal waterBill;
+    private Integer waterBill;
 
     @Column(name = "electricity_bill", precision = 10, scale = 2)
-    private BigDecimal electricityBill;
+    private Integer electricityBill;
 
     @Column(name = "property_papers")
-    private BigDecimal propertyPapers;
+    private Integer propertyPapers;
 
     @Column(name = "credit_score")
     private Integer creditScore;
