@@ -24,12 +24,14 @@
 
     <!-- Input -->
     <div class="chat-input-area">
-      <input
-        [(ngModel)]="userInput"
-        [placeholder]="selectedLang === 'hi' ? 'प्रश्न पूछें...' : 'Ask your question...'"
-        class="chat-input"
-      />
-      <button (click)="sendMessage()" class="send-btn">➤</button>
-    </div>
+  <input
+    [(ngModel)]="userInput"
+    [placeholder]="selectedLang === 'hi' ? 'प्रश्न पूछें...' : 'Ask your question...'"
+    class="chat-input"
+  />
+  <button (click)="sendMessage()" class="send-btn">➤</button>
+  <button (click)="toggleMic()" class="mic-btn">{{ isListening ? '🔴' : '🎤' }}</button>
+</div>
+
   </div>
 </div>
