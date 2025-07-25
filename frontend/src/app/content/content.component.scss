@@ -53,16 +53,20 @@
 .hero-image {
   flex: 1 1 40%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 1rem;
   padding: 1rem;
 }
 
 .hero-image img {
-  max-width: 100%;
+  width: 48%;
   height: auto;
   border-radius: 16px;
   animation: floatImage 4s ease-in-out infinite;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
 
 /* Animations */
 @keyframes fadeInSlide {
